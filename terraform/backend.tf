@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket       = "iac-state-bucket"
-    key          = "terraform.tfstate"
-    region       = "eu-west-3"
+    bucket       = "ct-s3-state-backend"
+    key          = "shopingkaro-terraform"
+    region       = "eu-north-1"
     use_lockfile = true
   }
 }

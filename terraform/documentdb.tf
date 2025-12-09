@@ -35,6 +35,6 @@ resource "aws_docdb_cluster_instance" "instance" {
   count              = 1
   identifier         = "${var.project_name}-docdb-instance-${count.index}"
   cluster_identifier = aws_docdb_cluster.cluster.id
-  instance_class     = "db.r5.large"
+  instance_class     = "db.t3.medium"
   engine             = "docdb"
 }
