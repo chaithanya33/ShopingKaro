@@ -70,7 +70,7 @@ jobs:
           CLUSTER: ${{ secrets.ECS_CLUSTER }}
           SERVICE: ${{ secrets.ECS_SERVICE }}
         run: |
-          aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE} --task-definition --force-new-deployment
+          aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE} --force-new-deployment
 
       - name: Wait for service stability
         env:
