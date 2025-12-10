@@ -52,8 +52,8 @@ jobs:
           push: true
           registry: ${{ steps.login-ecr.outputs.registry }}
           tags: |
-            ${{ steps.login-ecr.outputs.registry }}/shopingkaro:${{ github.sha }}
-            ${{ steps.login-ecr.outputs.registry }}/shopingkaro:latest
+            ${{ steps.login-ecr.outputs.registry }}/shopingkaro-dev:${{ github.sha }}
+            ${{ steps.login-ecr.outputs.registry }}/shopingkaro-dev:latest
 
   deploy:
     needs: build
