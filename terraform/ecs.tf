@@ -1,5 +1,6 @@
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.project_name}-cluster"
+  tags = local.common_tags
 }
 
 resource "aws_lb" "alb" {
@@ -8,7 +9,7 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   subnets            = var.public_subnet_ids
   security_groups    = [aws_security_group.alb_sg.id]
-  tags               = { Name = "${var.project_name}-alb" }
+  tags               = merge(local.common_tags, { Name = "${var.project_name}-alb" })
 }
 
 resource "aws_route53_record" "alb_record" {
@@ -29,6 +30,7 @@ resource "aws_lb_target_group" "tg" {
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
+  tags        = local.common_tags
 
   health_check {
     path                = "/"
@@ -71,6 +73,8 @@ resource "aws_security_group" "alb_sg" {
   description = "Allow HTTP/HTTPS inbound to ALB"
   vpc_id      = var.vpc_id
 
+  tags = merge(local.common_tags, { Name = "${var.project_name}-alb-sg" })
+
   ingress {
     from_port   = 80
     to_port     = 80
@@ -98,6 +102,8 @@ resource "aws_security_group" "ecs_sg" {
   description = "Allow traffic from ALB to ECS tasks"
   vpc_id      = var.vpc_id
 
+  tags = merge(local.common_tags, { Name = "${var.project_name}-ecs-sg" })
+
   ingress {
     from_port       = 3000
     to_port         = 3000
@@ -115,9 +121,7 @@ resource "aws_security_group" "ecs_sg" {
 
 resource "aws_cloudwatch_log_group" "ecs" {
   name = "/ecs/${var.project_name}"
-  tags = {
-    Name = "${var.project_name}-ecs-log"
-  }
+  tags = merge(local.common_tags, { Name = "${var.project_name}-ecs-log" })
 }
 
 resource "aws_ecs_task_definition" "task" {
@@ -152,6 +156,8 @@ resource "aws_ecs_task_definition" "task" {
       }
     }
   ])
+
+  tags = local.common_tags
 }
 
 resource "aws_ecs_service" "service" {
@@ -172,6 +178,7 @@ resource "aws_ecs_service" "service" {
     container_name   = var.project_name
     container_port   = 3000
   }
+  tags = local.common_tags
 
   depends_on = [aws_lb_listener.http, aws_lb_listener.https, aws_cloudwatch_log_group.ecs]
 }

@@ -10,6 +10,12 @@ variable "project_name" {
   default     = "shopingkaro"
 }
 
+variable "environment" {
+  description = "Deployment environment (e.g. dev, staging, prod) used for tagging"
+  type        = string
+  default     = "dev"
+}
+
 variable "ecs_desired_count" {
   type    = number
   default = 1

@@ -1,12 +1,13 @@
 resource "aws_docdb_subnet_group" "docdb_sg" {
   name       = "${var.project_name}-docdb-subnet-group"
   subnet_ids = var.private_subnet_ids
-  tags       = { Name = "${var.project_name}-docdb-subnet-group" }
+  tags       = merge(local.common_tags, { Name = "${var.project_name}-docdb-subnet-group" })
 }
 
 resource "aws_security_group" "docdb_sg" {
   name   = "${var.project_name}-docdb-sg"
   vpc_id = var.vpc_id
+  tags   = merge(local.common_tags, { Name = "${var.project_name}-docdb-sg" })
 
   ingress {
     from_port       = 27017
@@ -29,6 +30,7 @@ resource "aws_docdb_cluster" "cluster" {
   master_password        = var.docdb_password
   skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.docdb_sg.id]
+  tags                   = local.common_tags
 }
 
 resource "aws_docdb_cluster_instance" "instance" {
@@ -37,4 +39,5 @@ resource "aws_docdb_cluster_instance" "instance" {
   cluster_identifier = aws_docdb_cluster.cluster.id
   instance_class     = "db.t3.medium"
   engine             = "docdb"
+  tags               = local.common_tags
 }
