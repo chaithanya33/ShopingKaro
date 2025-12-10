@@ -20,15 +20,16 @@ resource "aws_iam_role_policy_attachment" "ecs_task_policy_attach" {
 
 data "aws_iam_policy_document" "ecs_task_s3_access" {
   statement {
-    effect    = "Allow"
-    actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.env_file.arn]
-  }
-
-  statement {
-    effect    = "Allow"
-    actions   = ["s3:GetObject", "s3:GetObjectVersion"]
-    resources = ["${aws_s3_object.env_file.arn}"]
+    effect = "Allow"
+    actions = [
+      "s3:ListBucket",
+      "s3:GetObject",
+      "s3:GetObjectVersion"
+    ]
+    resources = [
+      aws_s3_bucket.env_file.arn,
+      "${aws_s3_bucket.env_file.arn}/*"
+    ]
   }
 }
 
@@ -56,20 +57,4 @@ resource "aws_iam_role" "ecs_execution_role" {
 resource "aws_iam_role_policy_attachment" "ecs_exec_attach" {
   role       = aws_iam_role.ecs_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
-data "aws_iam_policy_document" "ecs_exec_create_log_group" {
-  statement {
-    effect = "Allow"
-    actions = [
-      "logs:CreateLogGroup",
-    ]
-    resources = ["arn:aws:logs:*:*:log-group:/ecs/${var.project_name}*"]
-  }
-}
-
-resource "aws_iam_role_policy" "ecs_exec_create_log_group" {
-  name   = "${var.project_name}-ecs-exec-create-log-group"
-  role   = aws_iam_role.ecs_execution_role.id
-  policy = data.aws_iam_policy_document.ecs_exec_create_log_group.json
 }

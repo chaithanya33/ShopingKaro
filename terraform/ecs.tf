@@ -113,6 +113,13 @@ resource "aws_security_group" "ecs_sg" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "ecs" {
+  name = "/ecs/${var.project_name}"
+  tags = {
+    Name = "${var.project_name}-ecs-log"
+  }
+}
+
 resource "aws_ecs_task_definition" "task" {
   family                   = "${var.project_name}-task"
   network_mode             = "awsvpc"
@@ -138,10 +145,9 @@ resource "aws_ecs_task_definition" "task" {
         logDriver = "awslogs"
         options = {
           mode                  = "non-blocking"
-          awslogs-group         = "/ecs/${var.project_name}"
+          awslogs-group         = aws_cloudwatch_log_group.ecs.name
           awslogs-region        = var.aws_region
           awslogs-stream-prefix = "ecs"
-          awslogs-create-group  = "true"
         }
       }
     }
@@ -167,5 +173,5 @@ resource "aws_ecs_service" "service" {
     container_port   = 3000
   }
 
-  depends_on = [aws_lb_listener.http, aws_lb_listener.https]
+  depends_on = [aws_lb_listener.http, aws_lb_listener.https, aws_cloudwatch_log_group.ecs]
 }
