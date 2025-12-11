@@ -62,3 +62,8 @@ variable "docdb_password" {
   type        = string
   sensitive   = true
 }
+
+variable "container_image_uri" {
+  description = "URI of the container image to deploy in ECS (could be ECR or Docker Hub)"
+  type        = string
+}

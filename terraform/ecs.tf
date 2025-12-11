@@ -136,7 +136,7 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions = jsonencode([
     {
       name         = "${var.project_name}"
-      image        = "${aws_ecr_repository.app.repository_url}:latest"
+      image        = "${var.container_image_uri}:latest"
       essential    = true
       portMappings = [{ containerPort = 3000, protocol = "tcp" }]
       environmentFiles = [
