@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18-alpine
 ENV NODE_ENV=production
 COPY . /app
 RUN curl -o /app/global-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
