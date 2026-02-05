@@ -2,17 +2,6 @@
 
 ShopingKaro is a web application developed in Node.js that allows users to easily browse and shop for various products. With a user-friendly interface and a variety of features, ShopingKaro aims to provide a seamless online shopping experience.
 
-## Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-- [Docker Setup](#docker-setup)
-- [Testing](#testing)
-- [CI/CD Pipeline](#cicd-pipeline)
-- [Infrastructure as Code](#infrastructure-as-code)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
