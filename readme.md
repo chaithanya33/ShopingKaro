@@ -107,6 +107,9 @@ For detailed documentation, please refer to the [./terraform/README.md](./terraf
 ## Contributing
 
 If you'd like to contribute to ShopingKaro, please follow these guidelines:
+<img width="1907" height="873" alt="Screenshot 2026-02-08 124703" src="https://github.com/user-attachments/assets/58d09779-5e47-4328-8015-73b8739f0496" />
+<img width="1892" height="884" alt="Screenshot 2026-02-08 124638" src="https://github.com/user-attachments/assets/9b67256d-f5a3-4777-a388-c2eab73a9811" />
+
 
 - Fork the repository on GitHub.
 - Clone your forked repository to your local machine.
@@ -114,3 +117,5 @@ If you'd like to contribute to ShopingKaro, please follow these guidelines:
 - Make your changes and commit them with descriptive commit messages.
 - Push your changes to your forked repository.
 - Create a pull request to the main repository.
+
+
