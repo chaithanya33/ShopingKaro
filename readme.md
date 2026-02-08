@@ -114,8 +114,3 @@ If you'd like to contribute to ShopingKaro, please follow these guidelines:
 - Make your changes and commit them with descriptive commit messages.
 - Push your changes to your forked repository.
 - Create a pull request to the main repository.
-
-## License
-
-This project is licensed under the MIT License. Feel free to use, modify, and distribute it as per the license terms.
-
